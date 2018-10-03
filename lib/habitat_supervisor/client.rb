@@ -1,8 +1,12 @@
 require 'habitat_supervisor/configurable'
+require 'habitat_supervisor/connection'
+require 'habitat_supervisor/client/services'
 
 module HabitatSupervisor
   class Client
     include HabitatSupervisor::Configurable
+    include HabitatSupervisor::Connection
+    include HabitatSupervisor::Client::Services
 
     def initialize(options = {})
       # Use options passed in, but fall back to module defaults
