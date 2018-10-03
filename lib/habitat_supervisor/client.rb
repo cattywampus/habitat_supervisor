@@ -1,11 +1,13 @@
 require 'habitat_supervisor/configurable'
 require 'habitat_supervisor/connection'
+require 'habitat_supervisor/client/census'
 require 'habitat_supervisor/client/services'
 
 module HabitatSupervisor
   class Client
     include HabitatSupervisor::Configurable
     include HabitatSupervisor::Connection
+    include HabitatSupervisor::Client::Census
     include HabitatSupervisor::Client::Services
 
     def initialize(options = {})
