@@ -1,5 +1,7 @@
+require "json"
 require "bundler/setup"
 require "habitat_supervisor"
+require "webmock/rspec"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
@@ -11,4 +13,16 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
+end
+
+def hab_sup_url(url)
+  return url if url =~ /^http/
+
+  File.join(HabitatSupervisor.api_endpoint, url)
+end
+
+def stub_get(url, options = {}, &block)
+  request = stub_request(:get, hab_sup_url(url))
+  request = request.with(options) if options.keys.size > 0
+  request.to_return(block.call)
 end

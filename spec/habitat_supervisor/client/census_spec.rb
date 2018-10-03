@@ -8,6 +8,13 @@ RSpec.describe HabitatSupervisor::Client::Census do
 
   describe '.census' do
     it 'returns the supervisor census data' do
+      stub_get("/census") do
+        {
+          status: 200,
+          body: { changed: false, census_groups: {} }.to_json,
+          headers: {}
+        }
+      end
       census = @client.census
       expect(census).to be_kind_of Hash
     end
